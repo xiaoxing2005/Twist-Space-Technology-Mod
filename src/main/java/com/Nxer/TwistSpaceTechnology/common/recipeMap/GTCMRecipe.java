@@ -191,4 +191,14 @@ public class GTCMRecipe {
         .frontend(TST_IndustrialMagicMatrixFrontend::new)
         .disableOptimize()
         .build();
+    public static final RecipeMap<RecipeMapBackend> LargeArcaneMatterTransmutationTowerRecipe = RecipeMapBuilder
+        .of("tst.recipe.IndustrialMagicMatrixRecipe")
+        .maxIO(25, 1, 0, 0)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(GTCMItemList.LargeArcaneMatterTransmutationTowerRecipe.get(1)))
+        .neiTransferRect(100, 45, 18, 72)
+        .useSpecialSlot()
+        .frontend(TST_IndustrialMagicMatrixFrontend::new)
+        .disableOptimize()
+        .build();
 }

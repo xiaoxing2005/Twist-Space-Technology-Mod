@@ -185,6 +185,7 @@ public enum GTCMItemList {
     MegaEggGenerator,
     AstralComputingArray,
     IndustrialMagicMatrix,
+    LargeArcaneMatterTransmutationTowerRecipe,
 
     WirelessUpdateItem,
 
