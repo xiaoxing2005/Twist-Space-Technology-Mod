@@ -192,7 +192,7 @@ public class GTCMRecipe {
         .disableOptimize()
         .build();
     public static final RecipeMap<RecipeMapBackend> LargeArcaneMatterTransmutationTowerRecipe = RecipeMapBuilder
-        .of("tst.recipe.IndustrialMagicMatrixRecipe")
+        .of("tst.recipe.LargeArcaneMatterTransmutationTowerRecipe")
         .maxIO(25, 1, 0, 0)
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(GTCMItemList.LargeArcaneMatterTransmutationTowerRecipe.get(1)))

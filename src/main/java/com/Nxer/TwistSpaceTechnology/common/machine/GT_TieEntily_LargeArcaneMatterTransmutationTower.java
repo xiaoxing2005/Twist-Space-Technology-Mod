@@ -96,9 +96,9 @@ public class GT_TieEntily_LargeArcaneMatterTransmutationTower extends
     // region Structure
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
-    private final int horizontalOffSet = 22;
-    private final int verticalOffSet = 35;
-    private final int depthOffSet = 20;
+    private final int horizontalOffSet = 3;
+    private final int verticalOffSet = 15;
+    private final int depthOffSet = 1;
     public TileNodeEnergized NodeEnergized;
     public TileCrucible Crucible;
     // spotless:off

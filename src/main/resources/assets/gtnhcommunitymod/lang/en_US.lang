@@ -1052,3 +1052,4 @@ LargeCanner.modeMsg.false=Mode: Canning Machine
 Tooltip_SpaceApiary_t4_desc3=Consumes 1A-Luv per parallel, while consuming 1L liquid DNA/parallel per run.
 Tooltip_SpaceApiary_t2_desc3=Consumes 1A-Luv per parallel, while consuming 25L liquid DNA/parallel per run.
 Tooltip_SpaceApiary_t3_desc3=Consumes 1A-Luv per parallel, while consuming 5L liquid DNA/parallel per run.
+NameLargeArcaneMatterTransmutationTower=LargeArcaneMatterTransmutationTower
