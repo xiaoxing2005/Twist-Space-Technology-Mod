@@ -18,11 +18,15 @@ import gregtech.api.interfaces.tileentity.IOverclockDescriptionProvider;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.objects.overclockdescriber.OverclockDescriber;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
+import gregtech.api.util.GT_Recipe;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static gregtech.api.enums.GT_Values.V;
@@ -66,7 +70,7 @@ public abstract class GT_TieEntity_MagesTowerTestModule extends GT_TieEntity_Mag
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return super.getRecipeMap();
+        return RecipeMaps.assemblerRecipes;
     }
 
     @Override
@@ -78,7 +82,14 @@ public abstract class GT_TieEntity_MagesTowerTestModule extends GT_TieEntity_Mag
     @Override
     protected ProcessingLogic createProcessingLogic() {
         return new GTCM_ProcessingLogic(){
-
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+                setSpeedBonus(1);
+                setOverclock(2, 2);
+                // setOverclock(isEnablePerfectOverclock() ? 2 : 1, isEnablePerfectOverclock() ? 2 : 3);
+                return super.process();
+            }
         }.setAmperageOC(false).setMaxParallelSupplier(() -> Math.min(getMaxParallels(), (int) parallelSetting.get()));
     }
 
@@ -117,7 +128,7 @@ public abstract class GT_TieEntity_MagesTowerTestModule extends GT_TieEntity_Mag
 
     @Override
     public boolean protectsExcessItem() {
-        return !eSafeVoid;
+        return eSafeVoid;
     }
 
     @Override

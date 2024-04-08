@@ -10,9 +10,11 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
 import com.gtnewhorizons.gtnhintergalactic.Tags;
 import com.gtnewhorizons.gtnhintergalactic.tile.multi.GT_MetaTileEntity_EnhancedMultiBlockBase_EM;
+import com.gtnewhorizons.gtnhintergalactic.tile.multi.elevatormodules.TileEntityModuleBase;
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.objects.GT_ChunkManager;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.util.GT_HatchElementBuilder;
@@ -21,6 +23,8 @@ import gregtech.api.util.IGT_HatchAdder;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.ChunkCoordIntPair;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -34,7 +38,29 @@ import static gregtech.api.enums.GT_HatchElement.Energy;
 import static net.minecraft.util.EnumChatFormatting.DARK_PURPLE;
 import static net.minecraft.util.EnumChatFormatting.LIGHT_PURPLE;
 
-public class GT_TieEntity_MagesTower extends GT_MetaTileEntity_EnhancedMultiBlockBase_EM implements ISurvivalConstructable, IConstructable {
+public class GT_TieEntity_MagesTower
+        extends GT_MetaTileEntity_EnhancedMultiBlockBase_EM
+        implements ISurvivalConstructable, IConstructable {
+
+    private boolean isLoadedChunk;
+
+    private static final int MODULE_CHARGE_INTERVAL = 20;
+
+    protected int motorTier = 1;
+
+    public int getMotorTier() {
+        return motorTier;
+    }
+
+    @Override
+    public void onRemoval() {
+        if (mProjectModuleHatches != null && !mProjectModuleHatches.isEmpty()) {
+            for (GT_TieEntity_MagesTowerModuleBase projectModule : mProjectModuleHatches) {
+                projectModule.disconnect();
+            }
+        }
+        super.onRemoval();
+    }
 
     public GT_TieEntity_MagesTower(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -44,8 +70,61 @@ public class GT_TieEntity_MagesTower extends GT_MetaTileEntity_EnhancedMultiBloc
         super(aName);
     }
 
+    public void setMotorTier(int tier) {
+        motorTier = tier;
+    }
 
-
+    @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        super.onPostTick(aBaseMetaTileEntity, aTick);
+        if (aBaseMetaTileEntity.isServerSide()){
+            if (!aBaseMetaTileEntity.isAllowedToWork()) {
+                // if machine has stopped, stop chunkloading
+                GT_ChunkManager.releaseTicket((TileEntity) aBaseMetaTileEntity);
+                isLoadedChunk = false;
+        }else if (!isLoadedChunk) {
+                // load a 3x3 area when machine is running
+                GT_ChunkManager.releaseTicket((TileEntity) aBaseMetaTileEntity);
+                int offX = aBaseMetaTileEntity.getFrontFacing().offsetX;
+                int offZ = aBaseMetaTileEntity.getFrontFacing().offsetZ;
+                for (int i = -1; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        GT_ChunkManager.requestChunkLoad(
+                                (TileEntity) aBaseMetaTileEntity,
+                                new ChunkCoordIntPair(getChunkX() + offX + i, getChunkZ() + offZ + j));
+                    }
+                }this.isLoadedChunk = true;
+            }
+        }
+        if (getBaseMetaTileEntity().isAllowedToWork()) {
+            if (aTick % MODULE_CHARGE_INTERVAL == 0) {
+                if (!mProjectModuleHatches.isEmpty()) {
+                    long tEnergy = getEUVar() / mProjectModuleHatches.size() * MODULE_CHARGE_INTERVAL;
+                    for (GT_TieEntity_MagesTowerModuleBase projectModule : mProjectModuleHatches) {
+                        if (projectModule.getNeededMotorTier() <= motorTier) {
+                            projectModule.connect();
+                            long tAvailableEnergy = getEUVar();
+                            if (tAvailableEnergy > 0) {
+                                setEUVar(
+                                        Math.max(
+                                                0,
+                                                tAvailableEnergy - projectModule
+                                                        .increaseStoredEU(Math.min(tEnergy, tAvailableEnergy))));
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if (!mProjectModuleHatches.isEmpty()) {
+                for (GT_TieEntity_MagesTowerModuleBase projectModule : mProjectModuleHatches) {
+                    projectModule.disconnect();
+                }
+            }
+        }
+        if (mEfficiency < 0) mEfficiency = 0;
+        fixAllIssues();
+    }
 
     @Override
     public @NotNull CheckRecipeResult checkProcessing_EM() {
@@ -59,6 +138,15 @@ public class GT_TieEntity_MagesTower extends GT_MetaTileEntity_EnhancedMultiBloc
         mMaxProgresstime = 0;
         return CheckRecipeResultRegistry.NO_RECIPE;
     }
+
+    public int getChunkX() {
+        return getBaseMetaTileEntity().getXCoord() >> 4;
+    }
+
+    public int getChunkZ() {
+        return getBaseMetaTileEntity().getZCoord() >> 4;
+    }
+
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final int STRUCTURE_PIECE_MAIN_HOR_OFFSET = 6;
@@ -130,6 +218,8 @@ public class GT_TieEntity_MagesTower extends GT_MetaTileEntity_EnhancedMultiBloc
 
     @Override
     public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack){
+        boolean isMachineValid = true;
+        mProjectModuleHatches.clear();
         if (structureCheck_EM(
                 STRUCTURE_PIECE_MAIN,
                 STRUCTURE_PIECE_MAIN_HOR_OFFSET,

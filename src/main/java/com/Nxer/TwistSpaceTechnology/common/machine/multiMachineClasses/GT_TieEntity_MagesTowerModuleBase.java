@@ -16,12 +16,18 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.recipe.check.CheckRecipeResult;
+import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.util.GT_HatchElementBuilder;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_StructureUtility;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import javax.annotation.Nonnull;
 
 import static goodgenerator.loader.Loaders.magicCasing;
 import static gregtech.api.enums.GT_HatchElement.*;
@@ -34,7 +40,7 @@ public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_Enhance
     protected final int tTier;
     protected final int tModuleTier;
     protected final int tMinMotorTier;
-    protected boolean isConnected = true;
+    protected boolean isConnected = false;
     Parameters.Group.ParameterOut energyDisplay;
     private static final INameFunction<GT_TieEntity_MagesTowerModuleBase> ENERGY_DISPLAY_NAME = (base, p) -> GCCoreUtil
             .translate("gt.blockmachines.multimachine.project.ig.cfgo.0"); // Stored Energy
@@ -104,6 +110,10 @@ public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_Enhance
             useLongPower = true;
         }
 
+    public static final CheckRecipeResult Notconnected = SimpleCheckRecipeResult
+            .ofFailurePersistOnShutdown("Not connected");
+
+
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         if (aBaseMetaTileEntity.isServerSide() && isConnected) {
@@ -114,7 +124,21 @@ public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_Enhance
             if (aBaseMetaTileEntity.getStoredEU() <= 0 && mMaxProgresstime > 0) {
                 stopMachine();
             }
-        }
+        }super.onPostTick(aBaseMetaTileEntity,aTick);
+
+    }
+
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        aNBT.setBoolean("isConnected", this.isConnected);
+        super.saveNBTData(aNBT);
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound aNBT) {
+        this.isConnected = aNBT.getBoolean("isConnected");
+        super.loadNBTData(aNBT);
     }
 
     @Override
@@ -171,10 +195,12 @@ public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_Enhance
 
     public void connect() {
         isConnected = true;
+        onMachineBlockUpdate();
     }
 
     public void disconnect() {
-        isConnected = false;
+       this.isConnected = false;
+       onMachineBlockUpdate();
     }
 
     @Override
@@ -213,7 +239,9 @@ public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_Enhance
     @Override
     public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         fixAllIssues();
-        return structureCheck_EM(STRUCTURE_PIECE_MAIN, 1, 1, 0);
+        if (structureCheck_EM(STRUCTURE_PIECE_MAIN, 1, 1, 0)){
+            return isConnected;
+        }return false;
     }
 
     @Override
