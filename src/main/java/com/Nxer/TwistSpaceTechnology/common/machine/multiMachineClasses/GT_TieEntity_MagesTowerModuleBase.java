@@ -1,12 +1,10 @@
 package com.Nxer.TwistSpaceTechnology.common.machine.multiMachineClasses;
 
-import com.Nxer.TwistSpaceTechnology.common.machine.GT_TieEntity_MagesTower;
 import com.github.technus.tectech.thing.metaTileEntity.multi.base.*;
 import com.github.technus.tectech.thing.metaTileEntity.multi.base.render.TT_RenderedExtendedFacingTexture;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
-import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.gtnewhorizons.gtnhintergalactic.gui.IG_UITextures;
 import com.gtnewhorizons.gtnhintergalactic.tile.multi.GT_MetaTileEntity_EnhancedMultiBlockBase_EM;
 import com.gtnewhorizons.gtnhintergalactic.tile.multi.elevator.TileEntitySpaceElevator;
@@ -16,22 +14,15 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.recipe.check.CheckRecipeResult;
-import gregtech.api.recipe.check.CheckRecipeResultRegistry;
-import gregtech.api.recipe.check.SimpleCheckRecipeResult;
-import gregtech.api.util.GT_HatchElementBuilder;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_StructureUtility;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import javax.annotation.Nonnull;
-
 import static goodgenerator.loader.Loaders.magicCasing;
-import static gregtech.api.enums.GT_HatchElement.*;
-import static gregtech.api.enums.GT_HatchElement.Energy;
 
 public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_EnhancedMultiBlockBase_EM {
 
@@ -110,10 +101,6 @@ public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_Enhance
             useLongPower = true;
         }
 
-    public static final CheckRecipeResult Notconnected = SimpleCheckRecipeResult
-            .ofFailurePersistOnShutdown("Not connected");
-
-
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         if (aBaseMetaTileEntity.isServerSide() && isConnected) {
@@ -124,7 +111,7 @@ public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_Enhance
             if (aBaseMetaTileEntity.getStoredEU() <= 0 && mMaxProgresstime > 0) {
                 stopMachine();
             }
-        }super.onPostTick(aBaseMetaTileEntity,aTick);
+        }
 
     }
 
@@ -266,7 +253,6 @@ public class GT_TieEntity_MagesTowerModuleBase extends GT_MetaTileEntity_Enhance
         }
         return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(TileEntitySpaceElevator.CASING_INDEX_BASE) };
     }
-
     @Override
     public void addGregTechLogo(ModularWindow.Builder builder) {
         builder.widget(

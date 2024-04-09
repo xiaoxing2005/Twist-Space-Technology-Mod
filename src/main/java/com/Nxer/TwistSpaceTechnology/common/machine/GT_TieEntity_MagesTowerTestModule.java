@@ -51,15 +51,6 @@ public abstract class GT_TieEntity_MagesTowerTestModule extends GT_TieEntity_Mag
         overclockDescriber = new ModuleOverclockDescriber((byte) tTier, tModuleTier);
     }
 
-    /**
-     * Create new Space Assembler module
-     *
-     * @param aName                Name of the module
-     * @param tTier                Voltage tier of the module
-     * @param tModuleTier          Tier of the module
-     * @param tMinMotorTier        Minimum needed motor tier
-     * @param bufferSizeMultiplier Multiplier for the EU buffer size, if the standard buffer is too small
-     */
     public GT_TieEntity_MagesTowerTestModule(String aName, int tTier, int tModuleTier, int tMinMotorTier,
                                      int bufferSizeMultiplier) {
         super(aName, tTier, tModuleTier, tMinMotorTier, bufferSizeMultiplier);
@@ -128,7 +119,7 @@ public abstract class GT_TieEntity_MagesTowerTestModule extends GT_TieEntity_Mag
 
     @Override
     public boolean protectsExcessItem() {
-        return eSafeVoid;
+        return !eSafeVoid;
     }
 
     @Override
