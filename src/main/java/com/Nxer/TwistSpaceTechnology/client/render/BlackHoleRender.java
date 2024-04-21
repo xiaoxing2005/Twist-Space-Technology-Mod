@@ -1,12 +1,9 @@
 package com.Nxer.TwistSpaceTechnology.client.render;
 
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModelCustom;
-
-import org.lwjgl.opengl.GL11;
 
 import com.Nxer.TwistSpaceTechnology.common.tile.TileBlackHoleCore;
 
@@ -26,7 +23,7 @@ public class BlackHoleRender extends TileEntitySpecialRenderer {
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float timeSinceLastTick) {
         if (!(tile instanceof TileBlackHoleCore tileBlackHoleCore)) return;
-        TileBlackHoleCore.renderBlackHole(tileBlackHoleCore,x,y,z,timeSinceLastTick,model,textures,this);
+        TileBlackHoleCore.renderBlackHole(tileBlackHoleCore, x, y, z, timeSinceLastTick, model, textures, this);
     }
 
     public void BindTexture(ResourceLocation textures) {
