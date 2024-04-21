@@ -7,6 +7,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 
+import com.Nxer.TwistSpaceTechnology.client.render.BlackHoleRender;
 import com.Nxer.TwistSpaceTechnology.client.render.ItemRenderer;
 import com.Nxer.TwistSpaceTechnology.client.render.TileEntityRenderer;
 import com.Nxer.TwistSpaceTechnology.common.block.blockClass.ItemBlockPowerChair;
@@ -14,9 +15,11 @@ import com.Nxer.TwistSpaceTechnology.common.block.blockClass.ItemBlockPowerChair
 public class RendereLoader {
 
     public static IModelCustom PowerChairModel = null;
+    public static IModelCustom BlackHole = null;
 
     public RendereLoader() {
         PowerChairModel = AdvancedModelLoader.loadModel(new ResourceLocation("gtnhcommunitymod:model/PowerChair.obj"));
+        BlackHole = AdvancedModelLoader.loadModel(new ResourceLocation("gtnhcommunitymod:model/BlackHole.obj"));
         RendereLoader.registerItemRenderers();
         RendereLoader.registerTileEntityRenderers();
     }
@@ -29,5 +32,6 @@ public class RendereLoader {
 
     public static void registerTileEntityRenderers() {
         new TileEntityRenderer(PowerChairModel, new ResourceLocation("gtnhcommunitymod", "model/PowerChair.png"));
+        new BlackHoleRender(BlackHole, new ResourceLocation("gtnhcommunitymod", "model/BlackHole.png"));
     }
 }

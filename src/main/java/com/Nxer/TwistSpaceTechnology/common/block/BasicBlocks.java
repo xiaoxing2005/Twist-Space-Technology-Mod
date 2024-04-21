@@ -3,6 +3,7 @@ package com.Nxer.TwistSpaceTechnology.common.block;
 import net.minecraft.block.Block;
 
 import com.Nxer.TwistSpaceTechnology.common.block.blockClass.BlockBase01;
+import com.Nxer.TwistSpaceTechnology.common.block.blockClass.BlockBlackHoleCore;
 import com.Nxer.TwistSpaceTechnology.common.block.blockClass.BlockPowerChair;
 import com.Nxer.TwistSpaceTechnology.common.block.blockClass.Casings.MetaBlockCasing;
 import com.Nxer.TwistSpaceTechnology.common.block.blockClass.Casings.PhotonControllerUpgradeCasing;
@@ -31,4 +32,6 @@ public class BasicBlocks {
     public static Block NuclearReactorBlock = new BlockNuclearReactor("nuclear", "Mega Nuclear Reactor");
 
     public static Block BlockPowerChair = new BlockPowerChair();
+
+    public static Block BlockBlackHoleCore = new BlockBlackHoleCore();
 }
