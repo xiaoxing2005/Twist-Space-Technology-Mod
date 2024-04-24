@@ -5,10 +5,10 @@ import net.minecraft.item.Item;
 import com.Nxer.TwistSpaceTechnology.client.GTCMCreativeTabs;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemAdder01;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemAdderRune;
+import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemBlackHoleDataDepositor;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemMultiStructuresLinkTool;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemPowerChair;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemProofOfHeroes;
-import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemYamato;
 
 public final class BasicItems {
 
@@ -37,6 +37,9 @@ public final class BasicItems {
         "PowerChair",
         GTCMCreativeTabs.tabMetaItem01).setTextureName("gtnhcommunitymod:PowerChair");
 
-    public static final Item Yamato = new ItemYamato("Yamato", "Yamato", GTCMCreativeTabs.tabMetaItem01);
+    public static final Item BlackHoleDataDepositor = new ItemBlackHoleDataDepositor(
+        "Black Hole Data Depositor",
+        "BlackHoleDataDepositor",
+        GTCMCreativeTabs.tabMetaItem01).setTextureName("gtnhcommunitymod:ProofOfHeroes");
 
 }
