@@ -40,6 +40,7 @@ public enum GTCMItemList {
     Self_adaptiveAI5,
     CoreOfT800,
     ExoticCircuitBoard,
+    Yamato,
 
     LightQuantumMatrix,
     StarCore,
@@ -155,6 +156,7 @@ public enum GTCMItemList {
     PowerChair,
     PrimitiveMansSpaceTimeDistortionDevice,
     BallLightningUpgradeChip,
+    HatchUpdateTool,
 
     // Blocks
     TestCasing,
@@ -216,6 +218,7 @@ public enum GTCMItemList {
     BigBroArray,
     IndustrialMagnetarSeparator,
     MegaTreeFarm,
+    LightningSpire,
 
     // MAX
     HighDimensionalExtend,
@@ -265,6 +268,8 @@ public enum GTCMItemList {
     BufferedEnergyHatchMAX,
     DebugUncertaintyHatch,
     LaserSmartNode,
+
+    ExtremeCraftCenter,
 
     // Blocks
 

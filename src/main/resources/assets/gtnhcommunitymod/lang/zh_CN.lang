@@ -359,7 +359,7 @@ Tooltip_ArtificialStar_02_05=在连续运行时, 每次运行连续运行奖励�
 Tooltip_ArtificialStar_02_06=连续运行奖励系数最大值 150%% , 中断后降到 100%% .
 Tooltip_ArtificialStar_Controller=人造恒星的控制器方块
 Waila.TST_ArtificialStar.1=当前发电 : 
-Tooltip_DSPInfo_00=戴森球产能点数 = 每太阳帆产出 (默认 524288) * 太阳帆数量 * (节点数量 + 1)^0.5
+Tooltip_DSPInfo_00=戴森球产能点数 = 每太阳帆产出 (默认 524288) * 太阳帆数量 * (节点数量 + 1)^0.8
 Tooltip_DSPInfo_01=每个节点可以吸附 (默认) 256 太阳帆.
 Tooltip_DSPInfo_02=如果未吸附的太阳帆数量超过2048,
 Tooltip_DSPInfo_03= 超过的部分可能会损毁.
@@ -1005,9 +1005,6 @@ Tooltip_SpaceApiary_t1_desc1=该让懒惰的蜜蜂们晒晒太阳了
 Tooltip_SpaceApiary_desc1=在低重力环境中精准扭曲蜜蜂工作时间.
 Tooltip_SpaceApiary_desc2=需要在控制器中放入蜂后.
 Tooltip_SpaceApiary_desc3=每并行消耗 1A-Luv ，同时每次运行消耗 100L 液态DNA/并行.
-Tooltip_SpaceApiary_t2_desc3=每并行消耗 1A-Luv ，同时每次运行消耗 25L 液态DNA/并行.
-Tooltip_SpaceApiary_t3_desc3=每并行消耗 1A-Luv ，同时每次运行消耗 5L 液态DNA/并行.
-Tooltip_SpaceApiary_t4_desc3=每并行消耗 1A-Luv ，同时每次运行消耗 1L 液态DNA/并行.
 Tooltip_SpaceApiary_t1_desc4=最大并行：256
 NameSpaceApiaryT2=太空蜂箱模块 MK-II
 Tooltip_SpaceApiary_t2_desc1=臣服于蜂巢思维..
@@ -1075,6 +1072,9 @@ Tooltip_IndustrialMagicMatrix_25=源质扩散单元
 Tooltip_IndustrialMagicMatrix_25.1=§b每级提供4^tier的并行
 LargeCanner.modeMsg.true=流体灌装机模式
 LargeCanner.modeMsg.false=装罐机模式
+Tooltip_SpaceApiary_t4_desc3=每并行消耗 1A-Luv ，同时每次运行消耗 1L 液态DNA/并行.
+Tooltip_SpaceApiary_t2_desc3=每并行消耗 1A-Luv ，同时每次运行消耗 25L 液态DNA/并行.
+Tooltip_SpaceApiary_t3_desc3=每并行消耗 1A-Luv ，同时每次运行消耗 5L 液态DNA/并行.
 MetaBlockCasing01.8.name=抗磁机械方块
 NameIndustrialMagnetarSeparator=工业电磁离析机
 Tooltip_IndustrialMagnetarSeparator_MachineType=电磁离析机
@@ -1084,3 +1084,28 @@ Tooltip_IndustrialMagnetarSeparator.02=只需要使用配方要求功率的80%%
 Tooltip_IndustrialMagnetarSeparator.03=每提升一个电压等级，每次运行可以多处理8个物品
 Tooltip_IndustrialMagnetarSeparator.casingAmount=剩余方块为§7抗磁机械方块§r(至少§69§r个！)
 BlockPowerChair.0.name=抛瓦椅
+
+NameExtremeCraftCenter=梦魇工业合成中心
+tst.megacraftingcenter.machinetype=工作台 | 梦魇合成台
+tst.megacraftingcenter.desc.0= 耗电量: ZPM * n, n 是当前并行合成的数量
+tst.megacraftingcenter.desc.1= 处理时间: (2 * (1 + log10(1 + n))) Tick
+tst.megacraftingcenter.desc.2= 需要输出仓进行物品输出，需要输入仓放置样板
+tst.megacraftingcenter.desc.3= 如果样板不是合法的工作台配方或者终极工作台配方，将不会被处理并展示在ae网络中。
+tst.megacraftingcenter.desc.4= 请不要倍增您的样板。数量与展示在NEI中的配方不符的样板将视为不合法。
+gtcm.recipe.extremeCraftRecipes= 梦魇工作台配方转换
+
+item.Yamato.name=阎魔刀
+item.YamatoUnsheathed.name=阎魔刀(未开鞘)
+
+GTCM_LightningSpire_MachineType=多方块避雷针
+GTCM_LightningSpire_01=§9“雷霆是上帝的大炮”
+GTCM_LightningSpire_02=§1“但现在我们将掌控雷霆”
+GTCM_LightningSpire_03=§b最大存储512个避雷针（I）
+GTCM_LightningSpire_04=§b每个避雷针每次雷击生产28MEU，并且存储280MEU
+GTCM_LightningSpire_05=§b无视雷雨天气发电
+GTCM_LightningSpire_06=§b每次雷击必须精准输入128凛冰和内部避雷针数量72倍的熔融铁
+GTCM_LightningSpire_07=§n使用螺丝刀切换输入，输出，发电模式
+GTCM_LightningSpire_08=§n输出机器前请先输出完内部电力缓存
+GTCM_LightningSpire_09=§n拆除机器前请先输出避雷针
+GTCM_LightningSpire_10=§n否则会丢失所有内部避雷针！
+NameLightningSpire=闪电尖塔

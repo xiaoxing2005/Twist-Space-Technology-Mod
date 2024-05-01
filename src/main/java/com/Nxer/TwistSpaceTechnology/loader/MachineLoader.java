@@ -9,6 +9,7 @@ import com.Nxer.TwistSpaceTechnology.common.GTCMItemList;
 import com.Nxer.TwistSpaceTechnology.common.machine.GTCM_CrystallineInfinitier;
 import com.Nxer.TwistSpaceTechnology.common.machine.GTCM_ElvenWorkshop;
 import com.Nxer.TwistSpaceTechnology.common.machine.GTCM_HyperSpacetimeTransformer;
+import com.Nxer.TwistSpaceTechnology.common.machine.GTCM_LightningSpire;
 import com.Nxer.TwistSpaceTechnology.common.machine.GT_TileEntity_HolySeparator;
 import com.Nxer.TwistSpaceTechnology.common.machine.GT_TileEntity_IndustrialMagicMatrix;
 import com.Nxer.TwistSpaceTechnology.common.machine.GT_TileEntity_IntensifyChemicalDistorter;
@@ -41,6 +42,7 @@ import com.Nxer.TwistSpaceTechnology.common.machine.TST_LargeCanner;
 import com.Nxer.TwistSpaceTechnology.common.machine.TST_LargeIndustrialCokingFactory;
 import com.Nxer.TwistSpaceTechnology.common.machine.TST_LargeSteamAlloySmelter;
 import com.Nxer.TwistSpaceTechnology.common.machine.TST_LargeSteamForgeHammer;
+import com.Nxer.TwistSpaceTechnology.common.machine.TST_MegaCraftingCenter;
 import com.Nxer.TwistSpaceTechnology.common.machine.TST_MegaMacerator;
 import com.Nxer.TwistSpaceTechnology.common.machine.TST_MiracleDoor;
 import com.Nxer.TwistSpaceTechnology.common.machine.TST_Scavenger;
@@ -129,6 +131,9 @@ public class MachineLoader {
     public static ItemStack LargeCanner;
     public static ItemStack IndustrialMagnetarSeparator;
     public static ItemStack MegaTreeFarm;
+    public static ItemStack LightningSpire;
+
+    public static ItemStack ExtremeCraftCenter;
 
     // Single Block
     public static ItemStack InfiniteAirHatch;
@@ -493,9 +498,25 @@ public class MachineLoader {
                 TextEnums.tr("NameIndustrialMagnetarSeparator")).getStackForm(1);
             GTCMItemList.IndustrialMagnetarSeparator.set(IndustrialMagnetarSeparator);
         }
+
+        ExtremeCraftCenter = new TST_MegaCraftingCenter(
+            19052,
+            "NameExtremeCraftCenter",
+            TextEnums.tr("NameExtremeCraftCenter")).getStackForm(1);
+        GTCMItemList.ExtremeCraftCenter.set(ExtremeCraftCenter);
         // if(Config.Enable_MegaTreeFarm)
         // 19051
 
+        if (Config.Enable_LightningSpire) {
+            LightningSpire = new GTCM_LightningSpire(
+                19053,
+                "NameLightningSpire",
+                // #tr NameLightningSpire
+                // # Lightning Spire
+                // #zh_CN 闪电尖塔
+                TextEnums.tr("NameLightningSpire")).getStackForm(1);
+            GTCMItemList.LightningSpire.set(LightningSpire);
+        }
         // endregion
 
         // region Single block Machine
