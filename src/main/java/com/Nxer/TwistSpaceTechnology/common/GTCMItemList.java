@@ -40,6 +40,7 @@ public enum GTCMItemList {
     Self_adaptiveAI5,
     CoreOfT800,
     ExoticCircuitBoard,
+    BlackHoleDataDepositor,
 
     LightQuantumMatrix,
     StarCore,

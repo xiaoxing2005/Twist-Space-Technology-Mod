@@ -1,19 +1,30 @@
 package com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic;
 
+import static com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.DataStorageMaps.PenroseBallDate;
+import static com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.PenroseBall_WorldSavedData.markDataDirty;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public class BlackHole {
+public class BlackHole implements Serializable {
 
     private final int Mass;
     private final double AngularMomentum;
     private final int Distance;
+    private double PenroseBallRevisedValue;
+    private boolean isPenroseBall;
+    private PenroseBall_DataCell penroseBallDataCell;
 
     public BlackHole(int Mass, double AngularMomentum, int Distance) {
         this.Mass = Mass;
         this.AngularMomentum = AngularMomentum;
         this.Distance = Distance;
+        this.PenroseBallRevisedValue = 1.0d;
+        this.isPenroseBall = false;
     }
 
     public static BlackHole RandomBlackHole() {
@@ -48,4 +59,26 @@ public class BlackHole {
     public int getDistance() {
         return Distance;
     }
+
+    public double getPenroseBallRevisedValue() {
+        return PenroseBallRevisedValue;
+    }
+
+    public static void willBlackHoleIntoPenroseBall(UUID uuid, BlackHole blackHole, String ownerName) {
+        if (PenroseBallDate.containsKey(uuid)) {
+            blackHole.penroseBallDataCell = new PenroseBall_DataCell(ownerName, blackHole);
+            blackHole.penroseBallDataCell.setIndex(
+                PenroseBallDate.get(uuid)
+                    .size() + 1);
+        } else {
+            PenroseBallDate.put(uuid, new ArrayList<>());
+            blackHole.penroseBallDataCell = new PenroseBall_DataCell(ownerName, blackHole);
+            blackHole.penroseBallDataCell.setIndex(0);
+        }
+        PenroseBallDate.get(uuid)
+            .add(blackHole.penroseBallDataCell);
+        PenroseBall_EnergyGenerator.isDirty = true;
+        markDataDirty();
+    }
+
 }

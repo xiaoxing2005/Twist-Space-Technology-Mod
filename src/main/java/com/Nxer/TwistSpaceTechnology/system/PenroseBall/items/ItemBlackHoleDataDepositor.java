@@ -1,6 +1,8 @@
-package com.Nxer.TwistSpaceTechnology.common.item.itemAdders;
+package com.Nxer.TwistSpaceTechnology.system.PenroseBall.items;
 
-import java.util.ArrayList;
+import static com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.BlackHole.getBlackHole;
+import static com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.BlackHole.willBlackHoleIntoPenroseBall;
+import static com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.DataStorageMaps.PenroseBallDate;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,9 +33,8 @@ import com.gtnewhorizons.modularui.common.widget.VanillaButtonWidget;
 public class ItemBlackHoleDataDepositor extends Item implements IItemWithModularUI {
 
     ItemStackHandler phantomInventory = new ItemStackHandler(2);
-    private static final NumberFormatMUI numberFormat = new NumberFormatMUI();
-    private int[] NBT;
-    private static ArrayList<int[]> List;
+    public static final NumberFormatMUI numberFormat = new NumberFormatMUI();
+    private int INDEX;
 
     public ItemBlackHoleDataDepositor(String aName, String aMetaName, CreativeTabs aCreativeTabs) {
         super();
@@ -52,15 +53,17 @@ public class ItemBlackHoleDataDepositor extends Item implements IItemWithModular
         return itemStackIn;
     }
 
-    public static ItemStack addBlackHoleNBT(ItemStack itemStack, int index, int Mass, int AngularMomentum) {
+    public static ItemStack addBlackHoleNBT(ItemStack itemStack, int distance, int Mass, double AngularMomentum) {
         NBTTagCompound nbt = itemStack.getTagCompound();
-        if (nbt.getTagList("BlackHoleList", 10) != null) {
-            NBTTagList list = new NBTTagList();
+        if (nbt != null && nbt.getTagList("BlackHoleList", 10) != null) {
             NBTTagCompound tag = new NBTTagCompound();
-            tag.setInteger("index", index);
-            tag.setInteger("mass", Mass);
-            tag.setInteger("angularmomentum", AngularMomentum);
-            list.appendTag(tag);
+            tag.setInteger(
+                "index",
+                nbt.getTagList("BlackHoleList", 10)
+                    .tagCount());
+            tag.setInteger("Mass", Mass);
+            tag.setInteger("Distance", distance);
+            tag.setDouble("AngularMomentum", AngularMomentum);
             nbt.getTagList("BlackHoleList", 10)
                 .appendTag(tag);
             return itemStack;
@@ -68,9 +71,10 @@ public class ItemBlackHoleDataDepositor extends Item implements IItemWithModular
         NBTTagList list = new NBTTagList();
         NBTTagCompound tag = new NBTTagCompound();
         NBTTagCompound NBT = new NBTTagCompound();
-        tag.setInteger("index", index);
-        tag.setInteger("mass", Mass);
-        tag.setInteger("angularmomentum", AngularMomentum);
+        tag.setInteger("index", 0);
+        tag.setInteger("Mass", Mass);
+        tag.setInteger("Distance", distance);
+        tag.setDouble("AngularMomentum", AngularMomentum);
         list.appendTag(tag);
         NBT.setTag("BlackHoleList", list);
         itemStack.setTagCompound(NBT);
@@ -89,10 +93,12 @@ public class ItemBlackHoleDataDepositor extends Item implements IItemWithModular
         buildContext.addSyncedWindow(1, this::createAnotherWindow);
         NBTTagCompound nbt = heldStack.getTagCompound();
         if (getBlack(nbt)) {
-            for (int i = 0; i < List.size(); i++) {
+            for (int i = 0; i < heldStack.getTagCompound()
+                .getTagList("BlackHoleList", 10)
+                .tagCount(); i++) {
                 int finalI = i;
                 builder.widget(new ButtonWidget().setOnClick((clickData, widget) -> {
-                    NBT = List.get(finalI);
+                    INDEX = finalI;
                     if (!widget.isClient()) {
                         widget.getContext()
                             .openSyncedWindow(1);
@@ -108,47 +114,60 @@ public class ItemBlackHoleDataDepositor extends Item implements IItemWithModular
     }
 
     private boolean getBlack(NBTTagCompound nbt) {
-        if (nbt != null) {
-            if (nbt.getTagList("BlackHoleList", 10) != null) {
-                List = new ArrayList<>();
-                NBTTagList list = nbt.getTagList("BlackHoleList", 10);
-                for (int i = 0; i < list.tagCount(); i++) {
-                    NBTTagCompound tag = list.getCompoundTagAt(i);
-                    List.add(
-                        new int[] { tag.getInteger("index"), tag.getInteger("mass"),
-                            tag.getInteger("angularmomentum") });
-                }
-            }
-            return true;
-        }
-        return false;
+        return nbt != null;
     }
 
     public ModularWindow createAnotherWindow(EntityPlayer player) {
         ItemStack itemStack = player.getHeldItem();
-        NBTTagCompound nbt = itemStack.getTagCompound();
+        NBTTagCompound nbt = itemStack.getTagCompound()
+            .getTagList("BlackHoleList", 10)
+            .getCompoundTagAt(INDEX);
+        int Mass = nbt.getInteger("Mass");
+        int Distance = nbt.getInteger("Distance");
+        double AngularMomentum = nbt.getDouble("AngularMomentum");
+        int index = nbt.getInteger("index");
         ModularWindow.Builder builder = ModularWindow.builder(120, 120);
         builder.setBackground(ModularUITextures.VANILLA_BACKGROUND);
-        if (NBT != null) {
+        if (!(INDEX < 0)) {
             return builder.setBackground(ModularUITextures.VANILLA_BACKGROUND)
                 .widget(
                     ButtonWidget.closeWindowButton(true)
                         .setPos(85, 5))
                 .widget(
-                    new DynamicTextWidget(() -> new Text("Mass : " + numberFormat.format(NBT[1])))
+                    new DynamicTextWidget(
+                        () -> new Text(
+                            "??? : " + PenroseBallDate.get(player.getPersistentID())
+                                .get(0)
+                                .getStoreEnergy())).setDefaultColor(EnumChatFormatting.WHITE)
+                                    .setTextAlignment(Alignment.CenterLeft)
+                                    .setPos(5, 50))
+                .widget(
+                    new DynamicTextWidget(() -> new Text("Mass : " + numberFormat.format(Mass)))
                         .setDefaultColor(EnumChatFormatting.WHITE)
                         .setTextAlignment(Alignment.CenterLeft)
                         .setPos(5, 40))
                 .widget(
-                    new DynamicTextWidget(() -> new Text("AngularMomentum :" + numberFormat.format(NBT[2])))
+                    new DynamicTextWidget(() -> new Text("Distance :" + numberFormat.format(Distance)))
                         .setDefaultColor(EnumChatFormatting.WHITE)
                         .setTextAlignment(Alignment.CenterLeft)
                         .setPos(5, 20))
                 .widget(
+                    new DynamicTextWidget(() -> new Text("AngularMomentum :" + numberFormat.format(AngularMomentum)))
+                        .setDefaultColor(EnumChatFormatting.WHITE)
+                        .setTextAlignment(Alignment.CenterLeft)
+                        .setPos(5, 30))
+                .widget(
                     new VanillaButtonWidget().setDisplayString("Lock")
                         .setOnClick((clickData, widget) -> {
                             if (!widget.isClient()) {
-                                setLock(itemStack, NBT[0]);
+                                setLock(itemStack, INDEX);
+                                willBlackHoleIntoPenroseBall(
+                                    player.getPersistentID(),
+                                    getBlackHole(
+                                        itemStack.getTagCompound()
+                                            .getTagList("BlackHoleList", 10)
+                                            .getCompoundTagAt(index)),
+                                    player.getDisplayName());
                             }
                         })
                         .setPos(40, 0)

@@ -1,6 +1,7 @@
 package com.Nxer.TwistSpaceTechnology.event;
 
 import com.Nxer.TwistSpaceTechnology.system.DysonSphereProgram.logic.DSP_SolarSailDecreaser;
+import com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.PenroseBall_EnergyGenerator;
 
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 
@@ -10,7 +11,7 @@ public class StartServerEvent {
 
     public void onLoading(FMLServerStartedEvent event) {
         DSP_SolarSailDecreaser.init();
-
+        PenroseBall_EnergyGenerator.init();
     }
 
 }

@@ -1,6 +1,6 @@
-package com.Nxer.TwistSpaceTechnology.common.machine;
+package com.Nxer.TwistSpaceTechnology.system.PenroseBall.machines;
 
-import static com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemBlackHoleDataDepositor.addBlackHoleNBT;
+import static com.Nxer.TwistSpaceTechnology.system.PenroseBall.items.ItemBlackHoleDataDepositor.addBlackHoleNBT;
 import static com.github.technus.tectech.loader.TecTechConfig.POWERLESS_MODE;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofChain;
@@ -88,7 +88,7 @@ public class GT_MetaTileEntity_EM_BlackHoleObserver extends GT_MetaTileEntity_Mu
             if (nbt == null || nbt.getTagList("BlackHoleList", 10)
                 .tagCount() < 16) {
                 CalculatedData();
-                addBlackHoleNBT(itemStack, this.Mass, this.AngularMomentum, this.distance);
+                addBlackHoleNBT(itemStack, this.distance, this.Mass, this.AngularMomentum);
             }
         }
     }

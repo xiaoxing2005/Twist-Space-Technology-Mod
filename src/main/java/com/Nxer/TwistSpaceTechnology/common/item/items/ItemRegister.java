@@ -197,6 +197,7 @@ public class ItemRegister {
 
         GTCMItemList.ProofOfHeroes.set(new ItemStack(BasicItems.ProofOfHeroes, 1));
         GTCMItemList.PowerChair.set(new ItemStack(BasicItems.PowerChair, 1));
+        GTCMItemList.BlackHoleDataDepositor.set(new ItemStack(BasicItems.BlackHoleDataDepositor,1));
     }
 
 

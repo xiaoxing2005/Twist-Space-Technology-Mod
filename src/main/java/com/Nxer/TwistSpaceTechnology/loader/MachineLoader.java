@@ -67,6 +67,7 @@ import com.Nxer.TwistSpaceTechnology.system.DysonSphereProgram.machines.TST_Arti
 import com.Nxer.TwistSpaceTechnology.system.DysonSphereProgram.machines.TST_DSPLauncher;
 import com.Nxer.TwistSpaceTechnology.system.DysonSphereProgram.machines.TST_DSPReceiver;
 import com.Nxer.TwistSpaceTechnology.system.OreProcess.machines.TST_OreProcessingFactory;
+import com.Nxer.TwistSpaceTechnology.system.PenroseBall.machines.GT_MetaTileEntity_EM_BlackHoleObserver;
 import com.Nxer.TwistSpaceTechnology.util.TextEnums;
 import com.Nxer.TwistSpaceTechnology.util.TextLocalization;
 import com.Nxer.TwistSpaceTechnology.util.Utils;
@@ -119,6 +120,7 @@ public class MachineLoader {
     public static ItemStack BallLightning;
     public static ItemStack StarcoreMiner;
     public static ItemStack Disassembler;
+    public static ItemStack BlackHoleObserver;
 
     public static ItemStack BigBroArray;
     public static ItemStack SpaceApiaryT1;
@@ -495,6 +497,13 @@ public class MachineLoader {
         }
         // if(Config.Enable_MegaTreeFarm)
         // 19051
+        BlackHoleObserver = new GT_MetaTileEntity_EM_BlackHoleObserver(
+            19051,
+            "NameBlackHoleObserver",
+            // #tr NameBlackHoleObserver
+            // # Black Hole Observer
+            // #zh_CN 黑洞观测者
+            TextEnums.tr("NameBlackHoleObserver")).getStackForm(1);
 
         // endregion
 

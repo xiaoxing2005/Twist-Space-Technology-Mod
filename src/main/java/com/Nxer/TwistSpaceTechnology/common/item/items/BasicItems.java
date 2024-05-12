@@ -5,10 +5,10 @@ import net.minecraft.item.Item;
 import com.Nxer.TwistSpaceTechnology.client.GTCMCreativeTabs;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemAdder01;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemAdderRune;
-import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemBlackHoleDataDepositor;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemMultiStructuresLinkTool;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemPowerChair;
 import com.Nxer.TwistSpaceTechnology.common.item.itemAdders.ItemProofOfHeroes;
+import com.Nxer.TwistSpaceTechnology.system.PenroseBall.items.ItemBlackHoleDataDepositor;
 
 public final class BasicItems {
 

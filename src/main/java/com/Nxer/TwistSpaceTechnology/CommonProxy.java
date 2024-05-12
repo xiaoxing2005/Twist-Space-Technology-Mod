@@ -19,6 +19,7 @@ import com.Nxer.TwistSpaceTechnology.event.StartServerEvent;
 import com.Nxer.TwistSpaceTechnology.event.TickingEvent;
 import com.Nxer.TwistSpaceTechnology.network.TST_Network;
 import com.Nxer.TwistSpaceTechnology.system.DysonSphereProgram.logic.DSP_WorldSavedData;
+import com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.PenroseBall_WorldSavedData;
 import com.supsolpans.MainSSP;
 
 import advsolar.common.AdvancedSolarPanel;
@@ -57,6 +58,7 @@ public class CommonProxy {
     public void init(FMLInitializationEvent event) {
 
         MinecraftForge.EVENT_BUS.register(new DSP_WorldSavedData());
+        MinecraftForge.EVENT_BUS.register(new PenroseBall_WorldSavedData());
         if (Config.activateCombatStats) {
             MinecraftForge.EVENT_BUS.register(DamageEventHandler.instance);
         }

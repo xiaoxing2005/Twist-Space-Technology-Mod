@@ -12,6 +12,6 @@ public abstract class DataStorageMaps {
      * <li>Key: The player's UUID
      * <li>Value: Penrose ball owned by the player
      */
-    public static Map<UUID, ArrayList<BlackHole>> BlackHoleDate = new HashMap<>();
+    public static Map<UUID, ArrayList<PenroseBall_DataCell>> PenroseBallDate = new HashMap<>();
 
 }

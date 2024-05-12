@@ -1,6 +1,6 @@
 package com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic;
 
-import static com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.DataStorageMaps.BlackHoleDate;
+import static com.Nxer.TwistSpaceTechnology.system.PenroseBall.logic.DataStorageMaps.PenroseBallDate;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,6 +18,8 @@ import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.event.world.WorldEvent;
 
+import com.Nxer.TwistSpaceTechnology.TwistSpaceTechnology;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import crazypants.enderio.Log;
 
@@ -30,7 +32,7 @@ public class PenroseBall_WorldSavedData extends WorldSavedData {
 
     private static void loadInstance(World world) {
 
-        BlackHoleDate.clear();
+        PenroseBallDate.clear();
 
         MapStorage storage = world.mapStorage;
         INSTANCE = (PenroseBall_WorldSavedData) storage.loadData(PenroseBall_WorldSavedData.class, DATA_NAME);
@@ -65,7 +67,7 @@ public class PenroseBall_WorldSavedData extends WorldSavedData {
             InputStream byteArrayInputStream = new ByteArrayInputStream(ba);
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
             Object data = objectInputStream.readObject();
-            BlackHoleDate = (Map<UUID, ArrayList<BlackHole>>) data;
+            PenroseBallDate = (Map<UUID, ArrayList<PenroseBall_DataCell>>) data;
         } catch (IOException | ClassNotFoundException e) {
             Log.error(PenroseBallNBTTag + " FAILED");
         }
@@ -76,12 +78,20 @@ public class PenroseBall_WorldSavedData extends WorldSavedData {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(BlackHoleDate);
+            objectOutputStream.writeObject(PenroseBallDate);
             objectOutputStream.flush();
             byte[] data = byteArrayOutputStream.toByteArray();
             nbtTagCompound.setByteArray(PenroseBallNBTTag, data);
         } catch (IOException e) {
             Log.error(PenroseBallNBTTag + " SAVE FAILED");
+        }
+    }
+
+    public static void markDataDirty() {
+        try {
+            INSTANCE.markDirty();
+        } catch (Exception e) {
+            TwistSpaceTechnology.LOG.info("Failed to mark World Save Data dirty.");
         }
     }
 }
